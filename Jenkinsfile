@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/your-repo/python-add-app.git'
+                git 'https://github.com/Lucky82477/python_deploye-in-docker.git'
             }
         }
 
