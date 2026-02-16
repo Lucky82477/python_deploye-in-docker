@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Replace with your GitHub URL
-                git 'https://github.com/your-username/your-repo.git'
+                git 'https://github.com/Lucky82477/python_deploye-in-docker.git'
             }
         }
 
