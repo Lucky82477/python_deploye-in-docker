@@ -1,50 +1,31 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "python-ec2-app"
-        CONTAINER_NAME = "python_app"
-    }
-
     stages {
-
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Lucky82477/jenkin-ci-cd.git'
+                // Replace with your GitHub URL
+                git 'https://github.com/your-username/your-repo.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:latest .'
+                sh 'docker build -t my-python-app .'
             }
         }
 
-        stage('Stop Old Container') {
-            steps {
-                sh 'docker rm -f $CONTAINER_NAME || true'
-            }
-        }
-
-        stage('Run Docker Container') {
+        stage('Deploy Container') {
             steps {
                 sh '''
-                docker run -d \
-                --name $CONTAINER_NAME \
-                -p 5000:5000 \
-                $IMAGE_NAME:latest
+                    # Stop and remove existing container if it exists
+                    docker stop my-running-app || true
+                    docker rm my-running-app || true
+                    
+                    # Run the new container
+                    docker run -d -p 5000:5000 --name my-running-app my-python-app
                 '''
             }
-        }
-    }
-
-    post {
-        success {
-            echo "Python app deployed successfully 🎉"
-        }
-        failure {
-            echo "Deployment failed ❌"
         }
     }
 }
